@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block custom_styles %}
+<style>
+    .contact-hero {
+        background: linear-gradient(120deg, #4a6bff 0%, #ff6b4a 100%);
+        color: #fff;
+        padding: 120px 0 70px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .contact-hero h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 18px;
+    }
+    .contact-hero p {
+        font-size: 1.25rem;
+        max-width: 600px;
+        margin: 0 auto 30px;
+        color: #ffe6e0;
+    }
+    .contact-section {
+        background: #fff;
+        padding: 80px 0 60px 0;
+    }
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: start;
+    }
+    .contact-info {
+        background: #f6f8fc;
+        border-radius: 15px;
+        padding: 40px 30px;
+        box-shadow: 0 6px 24px rgba(74,107,255,0.04);
+        margin-bottom: 30px;
+    }
+    .contact-info h3 {
+        color: #4a6bff;
+        margin-bottom: 18px;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+    .contact-info ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .contact-info li {
+        margin-bottom: 18px;
+        color: #2d3748;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .contact-info i {
+        color: #ff6b4a;
+        font-size: 1.2rem;
+    }
+    .contact-form {
+        background: #fff;
+        border-radius: 15px;
+        padding: 40px 30px;
+        box-shadow: 0 6px 24px rgba(74,107,255,0.04);
+        border: 1.5px solid #f0f2f5;
+    }
+    .contact-form h3 {
+        color: #4a6bff;
+        margin-bottom: 18px;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+    .contact-form form {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+    .contact-form input, .contact-form textarea {
+        padding: 12px 16px;
+        border-radius: 8px;
+        border: 1px solid #e3e9ff;
+        font-size: 1rem;
+        background: #f6f8fc;
+        transition: border 0.2s;
+    }
+    .contact-form input:focus, .contact-form textarea:focus {
+        border: 1.5px solid #4a6bff;
+        outline: none;
+    }
+    .contact-form button {
+        background: #4a6bff;
+        color: #fff;
+        border: none;
+        padding: 14px 0;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    .contact-form button:hover {
+        background: #ff6b4a;
+    }
+    @media (max-width: 900px) {
+        .contact-grid { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="contact-hero">
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p>Have a project in mind or want to learn more? Reach out and let's ignite innovation together!</p>
+    </div>
+</section>
+<section class="contact-section">
+    <div class="container">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> {{ contact_info.address }}</li>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:{{ contact_info.email }}">{{ contact_info.email }}</a></li>
+                    <li><i class="fas fa-phone-alt"></i> <a href="tel:{{ contact_info.phone }}">{{ contact_info.phone }}</a></li>
+                </ul>
+            </div>
+            <div class="contact-form">
+                <h3>Send Us a Message</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+                {% if messages %}
+                    <div style="margin-top:20px;">
+                        {% for message in messages %}
+                            <div style="color: #48bb78; font-weight: 600;">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
